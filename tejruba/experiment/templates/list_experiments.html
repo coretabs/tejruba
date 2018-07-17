@@ -1,9 +1,17 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends "shop/base.html" %}
 
-</body>
-</html>
+{% block title %}
+    Products
+{% endblock %}
+
+{% block content %}
+        <h1>Experiments</h1>
+        <ul>
+            {% for experiment in experiments %}
+                <li>
+                    <h4><a href="/">{{ experiment.content }}</a></h4><br>
+                </li>
+            {% endfor %}
+        </ul>
+
+{% endblock %}
