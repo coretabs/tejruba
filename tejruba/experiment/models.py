@@ -17,12 +17,12 @@ class Experiment(models.Model):
     def save(self, *args, **kwargs):
 
         if not self.id:
-            self.slug = slugify(self.name)
+            self.slug = slugify(self.content)
 
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse_lazy('list_experiments', args=[self.slug])
+        return reverse_lazy('experiment-detail', args=[str(self.id)])
 
 
 class Useful(models.Model):

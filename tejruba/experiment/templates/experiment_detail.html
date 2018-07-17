@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Title: {{ experiment.title }}</h1>
+
+  <p><strong>Author:</strong> <a href="">{{ experiment.author }}</a></p>
+  <p><strong>created:</strong> {{ experiment.created }}</p>
+  <p><strong>Content:</strong> {{ experiment.content }}</p>
+{% endblock %}
