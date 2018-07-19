@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
-from .models import Experiment
 from django.http import Http404
+from .models import Experiment
 from .forms import ExperimentForm
+
 
 #list of experiments
 def experiments_list(request, slug=None):
@@ -24,10 +25,15 @@ def experiment_detail_view(request, pk):
 
 
 def create_experiment(request):
-    form = ExperimentForm(request.POST or None)
+    if not request.user.is_authenticated:
+        raise Http404
 
+    form = ExperimentForm(request.POST or None)
     if form.is_valid():
-        form.save()
+        instance = form.save(commit=False)
+        instance.author = request.user
+        instance.save()
         return redirect('experiments_list')
 
     return render(request, 'create_experiment.html', {'form': form})
+

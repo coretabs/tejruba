@@ -5,9 +5,9 @@ from django.utils.text import slugify
 
 
 class Experiment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='experiments')
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='experiments')
     usefuls = models.ManyToManyField(User, related_name="usefuls", blank=True)
     notusefuls = models.ManyToManyField(User, related_name="notusefuls", blank=True)
 

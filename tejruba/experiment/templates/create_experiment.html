@@ -1,18 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-{{user.username}}
-{% if user.is_authenticated %}
 <form method="POST">
     {% csrf_token %}
-    <p><label for="id_content">Content:</label>
-        <textarea name="content" cols="40" rows="10" required id="id_content"></textarea>
-    </p><ul class="errorlist"><li>This field is required.</li></ul></p>
-
-    <input type="hidden" name="author" required value="{{user.id}}">
+    {{form.as_p}}
     <button class="btn btn-primary" type="submit">save</button>
 </form>
-{% else %}
-<p>error 404</p>
-{% endif %}
 {% endblock %}
