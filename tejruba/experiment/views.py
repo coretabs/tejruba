@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Experiment
 from django.http import Http404
-
+from .forms import ExperimentForm
 
 #list of experiments
 def experiments_list(request, slug=None):
@@ -21,3 +21,13 @@ def experiment_detail_view(request, pk):
             'experiment_detail.html',
             context={'experiment': experiment_id, }
         )
+
+
+def create_experiment(request):
+    form = ExperimentForm(request.POST or None)
+
+    if form.is_valid():
+        form.save()
+        return redirect('experiments_list')
+
+    return render(request, 'create_experiment.html', {'form': form})
