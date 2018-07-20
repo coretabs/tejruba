@@ -8,4 +8,8 @@
   <p><strong>Content:</strong> {{ experiment.content }}</p>
   <p><strong>Useful:</strong>  {{experiment.useful_count}}</p>
   <p><strong>NotUseful:</strong>  {{experiment.notuseful_count}}</p>
+<!-- error username == author !!! -->
+  {% if  user.username == experiment.author %}
+      <a  href="{% url 'experiment_update' experiment.pk %}">edit</a>
+  {% endif %}
 {% endblock %}
