@@ -48,3 +48,12 @@ def experiment_update(request, pk):
 
     return render(request, 'experiment_form.html', {"form": form,
                                                     "instance": instance})
+
+
+def experiment_delete(request, pk):
+    instance = get_object_or_404(Experiment, pk=pk)
+
+    if request.user == instance.author:
+        instance.delete()
+
+    return redirect("experiments_list")

@@ -11,5 +11,6 @@
 
   {% if user.is_authenticated and user == experiment.author %}
       <a  href="{% url 'experiment_update' experiment.pk %}">edit</a>
+      <a  href="{% url 'experiment_delete' experiment.pk %}">delete</a>
   {% endif %}
 {% endblock %}
