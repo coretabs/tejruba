@@ -11,33 +11,44 @@
   
   <!-- Add additional CSS in static file -->
   {% load static %}
-  <!--<link rel="stylesheet" href="{% static 'css/styles.css' %}">-->
+  <link rel="stylesheet" href="{% static 'css.css' %}">
 </head>
 
 <body>
+    <div id="header">
+        <div class="container">
+            <div class="float-left">
+                <a href="{% url 'experiments_list' %}" id="logo">EXPERIMENTS</a>
+            </div>
 
-  <div class="container-fluid">
+        </div>
 
-    <div class="row">
-      <div class="col-sm-2">
-      {% block sidebar %}
-      <ul class="sidebar-nav">
-          <li><a href="{% url 'experiments_list' %}">Home</a></li>
-          {% if user.is_authenticated %}
-          <li>User: {{ user.get_username }}</li>
-          <li><a href="{% url 'create_experiment' %}">Write Experiment</a></li>
-          <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
-          {% else %}
-          <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
-          {% endif %}
-      </ul>
-     {% endblock %}
-      </div>
-      <div class="col-sm-10 ">
-      {% block content %}{% endblock %}
-      </div>
     </div>
 
+  <div class="float-left">
+      <div class="row">
+          <div class="float-right">
+              {% block sidebar %}
+              <ul class="float-right">
+                  {% if user.is_authenticated %}
+                  <li>User: {{ user.get_username }}</li>
+                  <li><a href="{% url 'create_experiment' %}">Write Experiment</a></li>
+                  <li><a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+                  {% else %}
+                  <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+                  {% endif %}
+              </ul>
+              {% endblock %}
+          </div>
+          <div class="col-sm-10 ">
+              {% block content %}{% endblock %}
+          </div>
+      </div>
   </div>
+<div id="footer">
+    <div class="container">
+        Done By:
+	</div>
+</div>
 </body>
 </html>
