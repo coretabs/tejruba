@@ -21,11 +21,19 @@
                 <a href="{% url 'experiments_list' %}" id="logo">EXPERIMENTS</a>
             </div>
             <div class="float-right">
-                <div class="login-box">
-                    login
-                </div>
-
+            <div class="login-box">
+                <div><label for="email">Email or Phone</label></div>
+                <div><input type="email" id="email" autofocus></div>
             </div>
+            <div class="login-box">
+                <div><label for="password">Password</label></div>
+                <div><input type="password" id="password"></div>
+                <div><a href="#">Forgot account?</a></div>
+            </div>
+            <div class="login-box">
+                <input type="submit" value="Log In">
+            </div>
+        </div>
         </div>
 
     </div>
