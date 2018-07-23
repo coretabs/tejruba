@@ -1,0 +1,88 @@
+#header{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    min-width: 1020px;
+    z-index: 6;
+    padding: 12px 0;
+    position: relative;
+    background: #d32323 no-repeat center;
+}
+
+.container{
+	width: auto;
+	height: auto;
+	margin: 0 auto;
+	overflow: auto;
+}
+
+.float-left{
+    float: left;
+
+}
+.float-right{
+    float: right;
+
+}
+
+#logo{
+	display: block;
+    width: 180px;
+	height: 44px;
+	background-image: url(../img/1.png);
+	background-position: 0 0;
+	margin-top: 0px;
+    color:#fff;
+	font-family: Arial;
+	font-size: 25px;
+	overflow: hidden;
+}
+
+.login-box{
+	width: auto;
+	height: auto;
+	/*margin-top: 13px;*/
+	padding-right: 50px;
+	padding-top: 3px;
+	float:left;
+	margin-left: 15px;
+	box-sizing: border-box;
+    color: #d32323;
+}
+
+.login{
+    color: white;
+    font-family: Arial;
+	font-size: 18px;
+	text-align: left;
+}
+
+table {
+        border-collapse: collapse;
+        width: 100%;
+        }
+    th, td {
+    width=100%;
+    border-bottom: 1px solid #ddd;
+}
+
+.left{
+width: 35%;
+}
+
+.right{
+width: 80%;
+}
+
+input[type=button] {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}

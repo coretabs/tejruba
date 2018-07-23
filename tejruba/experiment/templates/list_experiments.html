@@ -4,13 +4,24 @@
 {% endblock %}
 
 {% block content %}
+<div class="content">
+    <table>
+        <tbody>
+        {% for experiment in experiments %}
+        <tr>
+            <td class="left">
+                <h4><a href="/">{{ experiment.author }}</a></h4>
+            </td>
+            <td class="right">
+                <h4><a href="{{ experiment.get_absolute_url }}">{{ experiment.content }}</a></h4><br>
+                <input type="button" value="Useful">
+                <input type="button" value="Not Useful">
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
 
-        <ul>
-            {% for experiment in experiments %}
-                <li>
-                    <h4><a href="{{ experiment.get_absolute_url }}">{{ experiment.content }}</a></h4><br>
-                </li>
-            {% endfor %}
-        </ul>
 
 {% endblock %}
