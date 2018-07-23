@@ -53,9 +53,27 @@ body {
 }
 
 #footer{
-	text-align: center;
-  background-color: #222;
-  padding: 2px 16px;
-  color: white;
+    text-align: center;
+    background-color: #222;
+    padding: 2px 16px;
+    color: white;
 }
 
+.float-left{
+    float: left;
+
+}
+.float-right{
+    float: right;
+
+}
+
+.login-box{
+	width: 120px;
+	height: 82px;
+	/*margin-top: 13px;*/
+	padding-top: 13px;
+	float:left;
+	margin-left: 15px;
+	box-sizing: border-box;
+}
