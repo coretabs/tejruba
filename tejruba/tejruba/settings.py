@@ -25,7 +25,7 @@ SECRET_KEY = '6j657b%2@aa#m8g)9tqy#_g^mh(xt^^jr((j1_yf&ak#0(v3zo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -124,3 +124,5 @@ STATIC_URL = '/static/'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/'
+
+AUTH_PROFILE_MODULE = 'Profile'

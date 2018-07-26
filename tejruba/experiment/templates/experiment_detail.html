@@ -1,14 +1,36 @@
 {% extends "base.html" %}
-
+<div>
 {% block content %}
-  <p><strong>Author:</strong> <a href="">{{ experiment.author }}</a></p>
-  <p><strong>created:</strong> {{ experiment.created }}</p>
-  <p><strong>Content:</strong> {{ experiment.content }}</p>
-  <p><strong>Useful:</strong>  {{experiment.useful_count}}</p>
-  <p><strong>NotUseful:</strong>  {{experiment.notuseful_count}}</p>
+    <table>
+        <tr>
+            <td>
+                <p><strong>Author:</strong> <a href="">{{ experiment.author }}</a></p>
+            </td>
+            <td>
+                <p><strong>created:</strong> {{ experiment.created }}</p>
+                <p><strong>Content:</strong> {{ experiment.content }}</p>
 
-  {% if user.is_authenticated and user == experiment.author %}
-      <a  href="{% url 'experiment_update' experiment.pk %}">edit</a>
-      <a  href="{% url 'experiment_delete' experiment.pk %}">delete</a>
-  {% endif %}
-{% endblock %}
+            </td>
+
+        </tr>
+        <tr>
+            <td></td>
+            <td>
+               <strong>Useful:</strong>  {{experiment.useful_count}}
+                <strong>NotUseful:</strong>  {{experiment.notuseful_count}}
+            </td>
+        </tr>
+        <tr>
+           <td>
+
+           </td>
+            <td>
+                {% if user.is_authenticated and user == experiment.author %}
+                <a  href="{% url 'experiment_update' experiment.pk %}">edit</a>
+                <a  href="{% url 'experiment_delete' experiment.pk %}">delete</a>
+                {% endif %}
+                {% endblock %}
+            </td>
+        </tr>
+    </table>
+</div>
