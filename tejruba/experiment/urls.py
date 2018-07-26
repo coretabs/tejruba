@@ -12,5 +12,6 @@ urlpatterns = [
     path('experiments/<int:pk>/edit', views.experiment_update, name="experiment_update"),
     path('experiments/<int:pk>/delete', views.experiment_delete, name="experiment_delete"),
     path('user', views.update_profile, name="profile"),
+    path('signup', views.signup, name='signup'),
 
 ]

@@ -30,7 +30,8 @@
                               <li class="float-left"><a href="{% url 'create_experiment' %}">Write Experiment</a></li>
                               <li><a href="{% url 'logout'%}?next={{request.path}}" class="login">Logout</a></li>
                               {% else %}
-                              <li><a href="{% url 'login'%}?next={{request.path}}" class="login">Login</a></li>
+                              <li><a href="{% url 'login'%}?next={{request.path}}" class="login">Login</a>&&<a href="{% url 'signup'%}" class="login">Sign up</a></li>
+
                               {% endif %}
                           </ul>
                           {% endblock %}
