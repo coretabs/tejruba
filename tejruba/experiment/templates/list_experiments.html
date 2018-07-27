@@ -13,9 +13,9 @@
                 <h4><a href="{% url 'profile' %}">{{ experiment.author }}</a></h4>
             </td>
             <td class="right">
-                <h4><a href="{{ experiment.get_absolute_url }}">{{ experiment.content }}</a></h4><br>
-                <input type="button" value="Useful">
-                <input type="button" value="Not Useful">
+                <h4><a href="{{ experiment.get_absolute_url }}">{{ experiment }}</a></h4><br>
+                <a href="{{ experiment.get_useful_url }}">Useful</a> {{ experiment.useful_count }}
+                <a href="{{ experiment.get_useful_url }}">Not Useful</a> {{experiment.notuseful_count}}
             </td>
         </tr>
         {% endfor %}

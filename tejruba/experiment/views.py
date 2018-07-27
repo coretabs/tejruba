@@ -6,6 +6,8 @@ from django.http import Http404
 from .models import Experiment
 from .forms import ExperimentForm, UserForm, ProfileForm, SignUpForm
 from django.contrib.auth import login, authenticate
+from django.views.generic import RedirectView
+
 
 #list of experiments
 def experiments_list(request):
@@ -17,6 +19,40 @@ def experiments_list(request):
 def experiment_detail_view(request, pk):
     experiment_detail = get_object_or_404(Experiment, pk=pk)
     return render(request, 'experiment_detail.html', context={'experiment': experiment_detail})
+
+
+# Useful
+class ExperimentUsefulRedirect(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        pk = self.kwargs.get("pk")
+        obj = get_object_or_404(Experiment, pk=pk)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user.is_authenticated:
+            if obj.usefuls.filter(pk=user.pk):
+                obj.usefuls.remove(user)
+            else:
+                if obj.notusefuls.filter(pk=user.pk):
+                    obj.notusefuls.remove(user)
+                obj.usefuls.add(user)
+        return url_
+
+
+# Not Useful
+class ExperimentNotUsefulRedirect(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        pk = self.kwargs.get("pk")
+        obj = get_object_or_404(Experiment, pk=pk)
+        url_ = obj.get_absolute_url()
+        user = self.request.user
+        if user.is_authenticated:
+            if obj.notusefuls.filter(pk=user.pk):
+                obj.notusefuls.remove(user)
+            else:
+                if obj.usefuls.filter(pk=user.pk):
+                    obj.usefuls.remove(user)
+                obj.notusefuls.add(user)
+        return url_
 
 
 def create_experiment(request):
@@ -60,6 +96,7 @@ def experiment_delete(request, pk):
         instance.delete()
 
     return redirect("experiments_list")
+
 
 @login_required
 @transaction.atomic

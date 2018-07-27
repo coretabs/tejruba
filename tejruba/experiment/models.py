@@ -5,6 +5,7 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+
 class Experiment(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='experiments')
     content = models.TextField()
@@ -32,9 +33,15 @@ class Experiment(models.Model):
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
-        return reverse_lazy('experiment-detail', args=[str(self.id)])
+        return reverse_lazy('experiment-detail', args=[str(self.pk)])
 
+    def get_useful_url(self):
+        return reverse_lazy('experiment_useful', args=[str(self.pk)])
+
+    def get_notuseful_url(self):
+        return reverse_lazy('experiment_notuseful', args=[str(self.pk)])
 # user profile
+
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

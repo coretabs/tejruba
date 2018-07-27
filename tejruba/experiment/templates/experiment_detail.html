@@ -16,8 +16,8 @@
         <tr>
             <td></td>
             <td>
-               <strong>Useful:</strong>  {{experiment.useful_count}}
-                <strong>NotUseful:</strong>  {{experiment.notuseful_count}}
+               <strong><a href="{{ experiment.get_useful_url }}">Useful</a></strong> {{experiment.useful_count}}
+                <strong><a href="{{ experiment.get_notuseful_url }}">NotUseful</a></strong>  {{experiment.notuseful_count}}
             </td>
         </tr>
         <tr>
