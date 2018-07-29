@@ -38,11 +38,16 @@ class Experiment(models.Model):
     def get_useful_url(self):
         return reverse_lazy('experiment_useful', args=[str(self.pk)])
 
+    def get_api_useful_url(self):
+        return reverse_lazy('experiment_api_useful', args=[str(self.pk)])
+
     def get_notuseful_url(self):
         return reverse_lazy('experiment_notuseful', args=[str(self.pk)])
+
+    def get_api_notuseful_url(self):
+        return reverse_lazy('experiment_api_notuseful', args=[str(self.pk)])
+
 # user profile
-
-
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     profile_picture = models.ImageField(upload_to='thumbpath', blank=True)
