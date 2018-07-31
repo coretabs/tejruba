@@ -128,7 +128,7 @@ LOGIN_REDIRECT_URL = '/'
 AUTH_PROFILE_MODULE = 'Profile'
 
 # Password Forget
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 EMAIL_HOST = 'smtp.sendgrid.net'
 EMAIL_PORT = 587
