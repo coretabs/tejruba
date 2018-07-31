@@ -7,6 +7,9 @@ from .models import Experiment
 from .forms import ExperimentForm, UserForm, ProfileForm, SignUpForm
 from django.contrib.auth import login, authenticate
 from django.views.generic import RedirectView
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import authentication, permissions
 
 
 #list of experiments
@@ -38,6 +41,35 @@ class ExperimentUsefulRedirect(RedirectView):
         return url_
 
 
+# Useful API
+class ExperimentUsefulAPI(APIView):
+    authentication_classes = (authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, pk, format=None):
+        obj = get_object_or_404(Experiment, pk=pk)
+        user = self.request.user
+        updated = False
+        useful = False
+
+        if user.is_authenticated:
+            if obj.usefuls.filter(pk=user.pk):
+                obj.usefuls.remove(user)
+                useful = False
+            else:
+                if obj.notusefuls.filter(pk=user.pk):
+                    obj.notusefuls.remove(user)
+                useful = True
+                obj.usefuls.add(user)
+            updated = True
+        data = {
+            "updated": updated,
+            "useful": useful
+        }
+
+        return Response(data)
+
+
 # Not Useful
 class ExperimentNotUsefulRedirect(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
@@ -53,6 +85,34 @@ class ExperimentNotUsefulRedirect(RedirectView):
                     obj.usefuls.remove(user)
                 obj.notusefuls.add(user)
         return url_
+
+
+# Not Useful API
+class ExperimentNotUsefulAPI(APIView):
+    authentication_classes = (authentication.SessionAuthentication,)
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, pk, format=None):
+        obj = get_object_or_404(Experiment, pk=pk)
+        user = self.request.user
+        updated = False
+        notuseful = False
+
+        if user.is_authenticated:
+            if obj.notusefuls.filter(pk=user.pk):
+                obj.notusefuls.remove(user)
+                notuseful = False
+            else:
+                if obj.usefuls.filter(pk=user.pk):
+                    obj.notusefuls.remove(user)
+                notuseful = True
+                obj.notusefuls.add(user)
+            updated = True
+        data = {
+            "updated": updated,
+            "notuseful": notuseful
+        }
+        return Response(data)
 
 
 def create_experiment(request):
