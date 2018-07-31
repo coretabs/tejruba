@@ -16,4 +16,5 @@ urlpatterns = [
     path('user/', views.update_profile, name="profile"),
     path('signup/', views.signup, name='signup'),
 
+
 ]

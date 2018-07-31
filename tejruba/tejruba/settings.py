@@ -126,3 +126,13 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = '/'
 
 AUTH_PROFILE_MODULE = 'Profile'
+
+# Password Forget
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'testsite_app'
+EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
