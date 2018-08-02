@@ -3,14 +3,13 @@ from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
-from .models import Experiment
+from .models import Experiment, Profile
 from .forms import ExperimentForm, UserForm, ProfileForm, SignUpForm
 from django.contrib.auth import login, authenticate
 from django.views.generic import RedirectView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import authentication, permissions
-
 
 #list of experiments
 def experiments_list(request):
@@ -179,6 +178,9 @@ def update_profile(request):
         'profile_form': profile_form
     })
 
+def profile_view(request, slug):
+    profile = get_object_or_404(Profile, slug=slug)
+    return render(request, 'profile_view.html', {'profile': profile})
 
 def signup(request):
     if request.method == 'POST':
