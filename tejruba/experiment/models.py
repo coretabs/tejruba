@@ -53,7 +53,7 @@ class Profile(models.Model):
     profile_picture = models.ImageField(upload_to='thumbpath', blank=True)
     location = models.CharField(max_length=30, blank=True)
     birth_date = models.DateField(null=True, blank=True)
-    slug =  models.SlugField(unique=True, blank=True)
+    #slug =  models.SlugField(unique=True, blank=True)
     
     def __str__(self):
         return f"{self.user} Profile"
