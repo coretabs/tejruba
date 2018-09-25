@@ -6,4 +6,33 @@
     {{form.as_p}}
     <button class="btn btn-primary" type="submit">save</button>
 </form>
+        <script
+   src="https://code.jquery.com/jquery-3.3.1.min.js"
+   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+   crossorigin="anonymous"></script>
+<script>
+    $(function ()
+    {
+        $("form").submit(function (event)
+        {
+            event.preventDefault();
+            var topicContent = $("textarea[name='content']").val();
+            var topicData = {
+                    "content": topicContent
+                    };
+            $.ajax({
+                type: "POST",
+                url: "/views/create_experiment",
+                data: JSON.stringify(topicData),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response)
+                {
+                    alert("Added topic successfully !");
+                    window.location.href = "index"
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}
