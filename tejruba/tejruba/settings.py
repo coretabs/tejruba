@@ -138,3 +138,15 @@ EMAIL_HOST_USER = 'testsite_app'
 EMAIL_HOST_PASSWORD = 'mys3cr3tp4ssw0rd'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'TestSite Team <noreply@example.com>'
+
+# REST framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        #'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
+}
