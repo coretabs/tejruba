@@ -9,8 +9,12 @@ from django.contrib.auth import login, authenticate
 from django.views.generic import RedirectView
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import authentication, permissions
-
+from rest_framework import authentication, permissions, viewsets
+from .serializers import ExperimentSerializer
+from django.http import Http404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
 #list of experiments
 def experiments_list(request):
     experiments = Experiment.objects.all()
@@ -197,3 +201,28 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+
+class ExperimentList(viewsets.ModelViewSet):
+    """
+    List all experiments, or create a new experiments.
+    """
+    #def get(self, request, format=None):
+    #    experiments = Experiment.objects.all()
+    #    serializer = ExperimentSerializer(experiments, many=True)
+    #    return Response(serializer.data)
+    #
+    #def post(self, request, format=None):
+    #    serializer = ExperimentSerializer(data=request.data)
+    #    if serializer.is_valid():
+    #        serializer.save()
+    #        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    #    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def create(self, request):
+        serializer = ExperimentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(author=self.request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
