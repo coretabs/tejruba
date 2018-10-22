@@ -12,49 +12,52 @@ from rest_framework.response import Response
 from rest_framework import authentication, permissions, viewsets, generics
 from .serializers import ExperimentSerializer
 from django.http import Http404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
-from rest_framework.decorators import api_view
-   #model = Experiment
-@api_view(['GET', 'POST'])
-def Experiments_list(request):
+from rest_framework.views import APIView,Response,status
+from rest_framework import mixins
+
+
+class ListExperiments(APIView):
+
     """
-    List all code experiments, or create a new experiment
+    List all experiments, or create a new experiment.
     """
-    if request.method == 'GET':
+    def get(self, request, format=None):
         experiments = Experiment.objects.all()
         serializer = ExperimentSerializer(experiments, many=True)
         return Response(serializer.data)
 
-    elif request.method == 'POST':
+    def post(self, request, format=None):
         serializer = ExperimentSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+class UpdateExperiment(APIView):
 
-@api_view(['GET', 'POST', 'DELETE'])
-def Experiments_detail(request, pk):
     """
-    Retrieve, update or delete experiment
+    Retrieve, update or delete a experiment instance.
     """
-    try:
-        experiment = Experiment.objects.get(pk=pk)
-    except Experiment.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
+    def get_object(self, pk):
+        try:
+            return Experiment.objects.get(pk=pk)
+        except Experiment.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        experiment = self.get_object(pk)
         serializer = ExperimentSerializer(experiment)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        serializer = ExperimentSerializer(experiment, data=request.data)
+    def put(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        serializer = ExperimentSerializer(snippet, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
+    def delete(self, request, pk, format=None):
+        experiment = self.get_object(pk)
         experiment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
