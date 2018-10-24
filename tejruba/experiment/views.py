@@ -1,19 +1,13 @@
-from django.contrib import messages
-from django.contrib.auth.decorators import login_required
-from django.db import transaction
-from django.shortcuts import render, redirect, get_object_or_404
-from django.http import Http404
 from .models import Experiment, Profile
-from .forms import ExperimentForm, UserForm, ProfileForm, SignUpForm
-from django.contrib.auth import login, authenticate
-from django.views.generic import RedirectView
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import authentication, permissions, viewsets, generics
-from .serializers import ExperimentSerializer
+from .serializers import ExperimentSerializer, LoginSerializer
 from django.http import Http404
 from rest_framework.views import APIView,Response,status
-from rest_framework import mixins
+from django.contrib.auth import (
+    login as django_login,
+    logout as django_logout
+)
+from django.conf import settings
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class ListExperiments(APIView):
@@ -61,3 +55,34 @@ class UpdateExperiment(APIView):
         experiment = self.get_object(pk)
         experiment.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class LoginView(APIView):
+    serializer_class = LoginSerializer
+    def process_login(self):
+        django_login(self.request, self.user)
+
+    def login(self):
+        self.user = self.serializer.validated_data['user']
+        if getattr(settings, 'REST_SESSION_LOGIN', True):
+            self.process_login()
+
+
+class LogoutView(APIView):
+    def get(self, request, *args, **kwargs):
+        if getattr(settings, 'ACCOUNT_LOGOUT_ON_GET', False):
+            response = self.logout(request)
+        else:
+            response = self.http_method_not_allowed(request, *args, **kwargs)
+
+        return self.finalize_response(request, response, *args, **kwargs)
+    
+    def logout(self, request):
+        try:
+            request.user.auth_token.delete()
+        except (AttributeError, ObjectDoesNotExist):
+            pass
+        django_logout(request)
+
+        return Response({'detail': _("تم تسجيل الخروج بنجاح")},
+                        status=status.HTTP_200_OK)
