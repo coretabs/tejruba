@@ -76,7 +76,7 @@ class LogoutView(APIView):
             response = self.http_method_not_allowed(request, *args, **kwargs)
 
         return self.finalize_response(request, response, *args, **kwargs)
-    
+
     def logout(self, request):
         try:
             request.user.auth_token.delete()

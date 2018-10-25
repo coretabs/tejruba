@@ -37,10 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
-
-    'experiment.apps.ExperimentConfig'
+    'allauth',
+    'allauth.account',
+    'rest_auth.registration',
+    'django.contrib.sites',
+    'experiment.apps.ExperimentConfig',
 ]
 
 MIDDLEWARE = [
