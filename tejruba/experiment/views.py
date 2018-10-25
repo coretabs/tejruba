@@ -1,5 +1,6 @@
 from .models import Experiment, Profile
-from .serializers import ExperimentSerializer, LoginSerializer
+from .serializers import ExperimentSerializer, UserSerializer, LoginSerializer
+from django.contrib.auth.models import User
 from django.http import Http404
 from rest_framework.views import APIView,Response,status
 from django.contrib.auth import (
@@ -8,7 +9,7 @@ from django.contrib.auth import (
 )
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
-
+from rest_framework import generics
 
 class ListExperiments(APIView):
 
@@ -86,3 +87,19 @@ class LogoutView(APIView):
 
         return Response({'detail': _("تم تسجيل الخروج بنجاح")},
                         status=status.HTTP_200_OK)
+
+
+class UserCreate(generics.CreateAPIView):
+    """
+    Create a User
+    """
+    serializer_class = UserSerializer
+    authentication_classes = ()
+    permission_classes = ()
+
+class UserDetail(generics.RetrieveAPIView):
+    """
+    Retrieve a User
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
