@@ -45,8 +45,8 @@ class UpdateExperiment(APIView):
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        serializer = ExperimentSerializer(snippet, data=request.data)
+        experiment = self.get_object(pk)
+        serializer = ExperimentSerializer(experiment, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
@@ -89,6 +89,11 @@ class LogoutView(APIView):
                         status=status.HTTP_200_OK)
 
 
+class UserList(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
 class UserCreate(generics.CreateAPIView):
     """
     Create a User
@@ -97,9 +102,35 @@ class UserCreate(generics.CreateAPIView):
     authentication_classes = ()
     permission_classes = ()
 
-class UserDetail(generics.RetrieveAPIView):
+class UserDetail(APIView):
     """
     Retrieve a User
     """
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+    #queryset = User.objects.all()
+    #serializer_class = UserSerializer
+    """
+    Retrieve, update or delete a experiment instance.
+    """
+    def get_object(self, pk):
+        try:
+            return Experiment.objects.get(pk=pk)
+        except Experiment.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        experiment = self.get_object(pk)
+        serializer = UserSerializer(experiment)
+        return Response(serializer.data)
+
+    def put(self, request, pk, format=None):
+        experiment = self.get_object(pk)
+        serializer = UserSerializer(experiment, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk, format=None):
+        experiment = self.get_object(pk)
+        experiment.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

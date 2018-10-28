@@ -74,7 +74,10 @@ class LoginSerializer(serializers.Serializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('username', 'email', 'password')
+        fields = ('username',
+                  'password', 'first_name', 'last_name',
+                  'email'
+                  )
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
@@ -86,4 +89,23 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+    def update(self, instance, validated_data):
+        """
+        Update and return an existing `Experiment` instance, given the validated data.
+        """
+        instance.password = validated_data.get('password', instance.password)
+        instance.email = validated_data.get('email', instance.email)
+        instance.username = validated_data.get('username', instance.username)
+
+        instance.save()
+        return instance
+
+    #def update(self, instance, validated_data):
+    #    for field in validated_data:
+    #        if field == 'password':
+    #            instance.set_password(validated_data.get(field))
+    #        else:
+    #            instance.__setattr__(field, validated_data.get(field))
+    #    instance.save()
+    #    return instance
 
