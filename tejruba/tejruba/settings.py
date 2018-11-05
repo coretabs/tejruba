@@ -38,10 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'allauth',
-    'allauth.account',
-    'rest_auth.registration',
-    'django.contrib.sites',
     'experiment.apps.ExperimentConfig',
 ]
 

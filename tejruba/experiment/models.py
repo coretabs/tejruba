@@ -7,7 +7,7 @@ from django.dispatch import receiver
 
 
 class Experiment(models.Model):
-    author = models.ForeignKey(User, on_delete=models.CASCADE, related_name='experiments')
+    username = models.ForeignKey(User, on_delete=models.CASCADE, related_name='experiments')
     content = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     usefuls = models.ManyToManyField(User, related_name="usefuls", blank=True)

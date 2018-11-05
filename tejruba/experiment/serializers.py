@@ -6,7 +6,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
-        fields = ("author",
+        fields = ("username",
                   "content",
                   "created",
         )
@@ -21,7 +21,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
         """
         Update and return an existing `Experiment` instance, given the validated data.
         """
-        instance.author = validated_data.get('author', instance.author)
+        instance.author = validated_data.get('username', instance.author)
         instance.content = validated_data.get('content', instance.content)
         instance.created = validated_data.get('created', instance.created)
 
@@ -90,22 +90,11 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        """
-        Update and return an existing `Experiment` instance, given the validated data.
-        """
-        instance.password = validated_data.get('password', instance.password)
-        instance.email = validated_data.get('email', instance.email)
-        instance.username = validated_data.get('username', instance.username)
-
+        for field in validated_data:
+            if field == 'password':
+                instance.set_password(validated_data.get(field))
+            else:
+                instance.__setattr__(field, validated_data.get(field))
         instance.save()
         return instance
-
-    #def update(self, instance, validated_data):
-    #    for field in validated_data:
-    #        if field == 'password':
-    #            instance.set_password(validated_data.get(field))
-    #        else:
-    #            instance.__setattr__(field, validated_data.get(field))
-    #    instance.save()
-    #    return instance
 
