@@ -9,6 +9,8 @@ experiments/<int:pk>/delete
 urlpatterns = [
     path('experiments/', views.ListExperiments.as_view()),
     path('experiments/<int:pk>', views.UpdateExperiment.as_view()),
+    path('experiments/<int:pk>/useful', views.useful.as_view()),
+    path('experiments/<int:pk>/notuseful', views.notuseful.as_view()),
     path('login/', views.LoginView.as_view()),
     path('logout/', views.LogoutView.as_view()),
     path('create_user/', views.UserCreate.as_view()),

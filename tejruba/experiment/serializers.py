@@ -2,6 +2,9 @@ from rest_framework import serializers, exceptions
 from .models import Experiment
 from django.contrib.auth import get_user_model, authenticate
 from django.contrib.auth.models import User
+from rest_framework.response import Response
+
+
 class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -27,7 +30,6 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
         instance.save()
         return instance
-
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField(required=False, allow_blank=True)

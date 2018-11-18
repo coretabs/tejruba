@@ -58,6 +58,39 @@ class UpdateExperiment(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class useful(APIView):
+
+    def useful(self, request, pk=None, post_pk=None):
+        if not request.user.is_authenticated:
+            return Response("Authentication credentials were not provided.")
+        else:
+            experiment = Experiment.objects.get(pk=pk)
+            if experiment.usefuls.filter(id=request.user.id).exists():
+                experiment.usefuls.remove(request.user)
+                return Response("Usefuls has been removed")
+            else:
+                if experiment.usefuls.filter(id=request.user.id).exists():
+                    experiment.usefuls.remove(request.user)
+                experiment.usefuls.add(request.user)
+                return Response("Usefuls has been added")
+
+
+class notuseful(APIView):
+    def notuseful(self, request, pk=None, post_pk=None):
+        if not request.user.is_authenticated:
+            return Response("Authentication credentials were not provided.")
+        else:
+            experiment = Experiment.objects.get(pk=pk)
+            if experiment.notusefuls.filter(id=request.user.id).exists():
+                experiment.notusefuls.remove(request.user)
+                return Response("Not Usefuls has been removed")
+            else:
+                if experiment.notusefuls.filter(id=request.user.id).exists():
+                    experiment.notusefuls.remove(request.user)
+                experiment.notusefuls.add(request.user)
+                return Response("Not Usefuls has been added")
+
+
 class LoginView(APIView):
     serializer_class = LoginSerializer
     def process_login(self):
