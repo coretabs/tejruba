@@ -18,7 +18,7 @@ django-allauth==0.36.0
 django-cors-headers==2.2.0
 django-environ==0.4.4
 django-filter==1.1.0
-djangorestframework==3.8.2
+djangorestframework==3.11.2
 gunicorn==19.7.1
 html5lib==1.0.1
 hyperlink==18.0.0
