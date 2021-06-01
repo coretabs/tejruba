@@ -46,7 +46,7 @@ South==1.0.2
 static3==0.7.0
 Unidecode==0.4.21
 Unipath==1.0
-urllib3==1.22
+urllib3==1.26.5
 virtualenv==15.2.0
 webencodings==0.5.1
 whitenoise==3.3.1
